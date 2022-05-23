@@ -12,9 +12,6 @@ const oldAssetsPath = path.join(__dirname, 'assets');
 const templatePath = path.join(__dirname, 'template.html');
 const componentsPath = path.join(__dirname, 'components');
 
-deleteFolder(folderPath);
-	
-function deleteFolder(folderPath) {
   
   
      
