@@ -3,15 +3,19 @@ const fs = require('fs');
 const filePath = path.join(__dirname, 'files-copy');
 const fileOutPath = path.join(__dirname, 'files');
 
-if (fs.existsSync(filePath)){
+fs.access(filePath, (e) => {
+if(!e){
     fs.readdir(filePath, (err,files) => {
         if(err){throw err}
               files.forEach(file => {
-                    fs.unlink(path.join(filePath, file), ()=>{})              
+                    fs.unlink(path.join(filePath, file), ()=>{})                              
                     })
+                    fs.rmdir(filePath, ()=>{})
             });
-     fs.rmdir(filePath, ()=>{})
-};
+     
+      }
+});
+
 path.join(fileOutPath, 'test-text.txt');
 
 fs.mkdir(filePath, {options: false}, () => {})//create folder

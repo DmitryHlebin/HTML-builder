@@ -3,9 +3,12 @@ const fs = require('fs');
 const filePath = path.join(__dirname, 'project-dist/bundle.css');
 const fileOutPath = path.join(__dirname, 'styles');
 // clear bundle
-if (fs.existsSync(filePath)){
-    fs.readdir(filePath, (err,files) => {})      
-};
+fs.access(filePath, (e) => {
+    if(!e){
+        fs.unlink(filePath, ()=>{})        
+          }
+    });
+    
 //create bundle.css
 fs.writeFile(filePath, "", ()=>{})
 
