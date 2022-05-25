@@ -1,28 +1,23 @@
+const { mkdir, readdir, copyFile, unlink } = require('fs/promises');
 const path = require('path');
-const fs = require('fs');
-const filePath = path.join(__dirname, 'files-copy');
-const fileOutPath = path.join(__dirname, 'files');
 
-fs.access(filePath, (e) => {
-if(!e){
-    fs.readdir(filePath, (err,files) => {
-        if(err){throw err}
-              files.forEach(file => {
-                    fs.unlink(path.join(filePath, file), ()=>{})                              
-                    })
-                    fs.rmdir(filePath, ()=>{})
-            });
-     
+(async function() {
+  try {
+    await mkdir(path.join(__dirname, 'files-copy'), { recursive: true });
+
+    const files = await readdir(path.join(__dirname, 'files'));
+    const filesCopy = await readdir(path.join(__dirname, 'files-copy'));
+
+    if (filesCopy.length) {
+      for (const fileCopy of filesCopy) {
+        unlink(path.join(__dirname, 'files-copy', fileCopy));
       }
-});
+    }
 
-path.join(fileOutPath, 'test-text.txt');
-
-fs.mkdir(filePath, {options: false}, () => {})//create folder
-
-fs.readdir(fileOutPath, (error, files) => {
-      files.forEach(file => {
-            fs.copyFile(path.join(fileOutPath, file),path.join(filePath, file),() => {})
-      
-            })
-    });
+    for (const file of files) {
+      copyFile(path.join(__dirname, 'files', file), path.join(__dirname, 'files-copy', file));
+    }
+  } catch (error) {
+    console.error(error);
+  }
+})();

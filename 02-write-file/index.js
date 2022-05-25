@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
     fs.writeFile(
-        'text.txt',
+      path.join(__dirname, 'text.txt'),
         ' ',
         (err) => {
         if (err) throw err;
@@ -10,7 +10,7 @@ const path = require('path');
     );
     process.stdin.on('data', data => {
         fs.appendFile(
-            'text.txt',
+          path.join(__dirname, 'text.txt'),
             data,
             (err) => {
               if (err) throw err;
